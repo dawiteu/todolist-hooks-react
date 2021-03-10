@@ -1,0 +1,32 @@
+.card{
+    width:250px;
+    position:relative;
+    min-height:50px;
+    margin:5px; 
+    padding:2px;
+}
+.card>.info{
+    position:absolute;
+    /* background-color: red; */
+    top:0;
+    right:0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}   
+
+.card>.info>input{
+    width:25px;
+    height:25px;
+    border:3px solid black;
+}
+
+.card>.info>button:hover{
+    background-color: red;
+}
+
+.card>.info>button{
+    height:25px;
+    width:25px;
+    border:1px solid black;
+}
