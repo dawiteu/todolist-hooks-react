@@ -30,3 +30,11 @@
     width:25px;
     border:1px solid black;
 }
+
+.bg-green{
+    background-color: green;
+}
+
+.bg-orange{
+    background-color: red;
+}
