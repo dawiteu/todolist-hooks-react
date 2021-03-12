@@ -2,7 +2,7 @@ import './Tache.css';
 
 const Tache = ({info, onDel, onCheck}) => {
     return (
-        <div className="card d-inline-block">
+        <div className="card d-inline-block" style={{display:info.style}}>
             <div className="info">
                 <button onClick={() => {onCheck(info.fait, info.id) }} className={info.fait ? 'bg-green' : 'bg-orange'}>V</button>
                 <button onClick={() => { onDel(info.id)} }>X</button>

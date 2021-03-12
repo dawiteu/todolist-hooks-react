@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'; 
@@ -9,9 +9,14 @@ import Tache from './component/Tache';
 let compteurTaches = 0; // au debut c'est a zero. 
 
 const App = () => {
+
+  const [taches, setTaches] = useState([]);
+  const pages = ["all", "do", "to do"]; 
+  let [pageContent, setPageContent] = useState(""); 
   
-  const [taches, setTaches] = useState([]); 
   let nbTaches = taches.length;
+
+
   const handleAdd = (nom) => {
     const updateTaches = [...taches];
     const idTache = compteurTaches+1; // id de la tache 
@@ -37,6 +42,38 @@ const App = () => {
     setTaches(updateTaches);
   }
 
+  const upPage = (name) => {
+    const tabTaches = [...taches]; 
+    switch(name){
+
+      default: case "all":
+        pageContent = nbTaches > 0 ? tabTaches.map( (tache, i) => <Tache key={i} info={tache} onDel={handDel} onCheck={handCheck} /> ) : "Pas de taches pour l'instant";
+        setPageContent(pageContent);
+      break;
+
+      case 'do':
+        pageContent = nbTaches > 0 ? tabTaches.filter((tache) => tache.fait === true).map((tache, i) => <Tache key={i} info={tache} onDel={handDel} onCheck={handCheck}  /> ) : "Pas de taches.";  
+        setPageContent(pageContent);
+      break;
+
+      case 'to do':
+        pageContent = nbTaches > 0 ? tabTaches.filter((tache) => tache.fait === false).map((tache, i) => <Tache key={i} info={tache} onDel={handDel} onCheck={handCheck}  /> ) : "Pas de taches.";
+        setPageContent(pageContent);
+      break;
+    }
+   }
+
+    const btnpage = (e) => {
+      const parametr = e.target.outerText;
+      const tabPage = [...pages];
+
+      let result = tabPage.indexOf(parametr); 
+      let pageName = tabPage[result];
+
+      upPage(pageName);
+    }
+
+    useEffect( () => upPage(pageContent), [taches]);
   return (
     <div className="container">
       <div className="row">
@@ -52,18 +89,25 @@ const App = () => {
         <div className="col-6 d-flex flex-column justify-content-center">
             <TacheForm onAdd={handleAdd} />
             <ul className="d-flex m-2 justify-content-center list-unstyled">
-              <li className="active"><button className="btn btn-secondary mx-2">ALL</button></li>
-              <li><button className="btn btn-secondary mx-2">DO</button></li>
-              <li><button className="btn btn-secondary mx-2">TO DO</button></li>
+              <li><button className="btn btn-secondary mx-2" onClick={(e) => btnpage(e)}>all</button></li>
+              <li><button className="btn btn-secondary mx-2" onClick={(e) => btnpage(e)}>do</button></li>
+              <li><button className="btn btn-secondary mx-2" onClick={(e) => btnpage(e)}>to do</button></li>
             </ul>
         </div>
       </div>
       <hr />
       <div className="container">
       { 
-        nbTaches > 0 ? taches.map( (tache, i) => <Tache key={i} info={tache} onDel={handDel} onCheck={handCheck} /> ) : "Pas de taches pour l'instant"
+        //nbTaches > 0 ? taches.map( (tache, i) => <Tache key={i} info={tache} onDel={handDel} onCheck={handCheck} /> ) : "Pas de taches pour l'instant"
       }
       </div>
+
+      <hr/>
+
+      <div className="container">
+        {pageContent ? pageContent : "Vous n'avez encore rien demadner"}
+      </div>
+       
     </div>
   );
 }
