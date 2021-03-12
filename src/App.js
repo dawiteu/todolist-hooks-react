@@ -13,7 +13,7 @@ const App = () => {
   const [taches, setTaches] = useState([]);
   const pages = ["all", "do", "to do"]; 
   let [pageContent, setPageContent] = useState(""); 
-  
+
   let nbTaches = taches.length;
 
 
@@ -113,3 +113,5 @@ const App = () => {
 }
 
 export default App;
+
+
