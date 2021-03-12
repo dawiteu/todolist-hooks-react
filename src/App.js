@@ -62,10 +62,12 @@ const App = () => {
       <div className="container">
       { 
         nbTaches > 0 ? taches.map( (tache, i) => <Tache key={i} info={tache} onDel={handDel} onCheck={handCheck} /> ) : "Pas de taches pour l'instant"
-      }
+      } 
       </div>
     </div>
   );
 }
 
 export default App;
+
+
